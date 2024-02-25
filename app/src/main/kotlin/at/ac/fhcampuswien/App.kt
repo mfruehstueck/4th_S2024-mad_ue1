@@ -3,10 +3,35 @@
  */
 package at.ac.fhcampuswien
 
+import java.util.Scanner
+
 class App {
     // Game logic for a number guessing game
     fun playNumberGame(digitsToGuess: Int = 4) {
         //TODO: build a menu which calls the functions and works with the return values
+        val scanner = Scanner(System.`in`)
+        println("Welcome to Number Guessing Game!")
+        println("Try to guess the number.")
+
+        val numberToGuess = generateRandomNonRepeatingNumber(digitsToGuess)
+        var isCorrect = false
+
+        println("Secret number has been generated. Let's begin!")
+        println(numberToGuess)
+
+        do {
+            print("Enter your guess (a ${digitsToGuess}-digit number): ")
+            val userGuess = scanner.nextLine()
+
+            val (correctDigits, correctPositions) = checkUserInputAgainstGeneratedNumber(userGuess.toInt(), numberToGuess)
+
+            println("Output: $correctDigits:$correctPositions")
+
+            if (correctPositions == digitsToGuess) {
+                println("Congratulations! You guessed the correct number: $numberToGuess")
+                isCorrect = true
+            }
+        } while (!isCorrect)
     }
 
     /**
@@ -25,7 +50,15 @@ class App {
      */
     val generateRandomNonRepeatingNumber: (Int) -> Int = { length ->
         //TODO implement the function
-        0   // return value is a placeholder
+        val digits = mutableListOf<Int>()
+        while (digits.size < length) {
+            val digit = (1..9).random()
+            if (!digits.contains(digit)) {
+                digits.add(digit)
+            }
+        }
+        digits.joinToString("").toInt()
+        //0   // return value is a placeholder
     }
 
     /**
@@ -46,11 +79,37 @@ class App {
      */
     val checkUserInputAgainstGeneratedNumber: (Int, Int) -> CompareResult = { input, generatedNumber ->
         //TODO implement the function
-        CompareResult(0, 0)   // return value is a placeholder
+        var correctDigits = 0
+        var correctPositions = 0
+        val inputDigits = convertIntToList(input)
+        val generatedNumberDigits = convertIntToList(generatedNumber)
+
+        for (i in inputDigits.indices) {
+            if (inputDigits.contains(generatedNumberDigits[i])) {
+                correctDigits++
+            }
+            if (inputDigits[i] == generatedNumberDigits[i]) {
+                correctPositions++
+            }
+        }
+        CompareResult(correctDigits, correctPositions)   // return value is a placeholder
+    }
+
+    val convertIntToList: (Int) -> List<Int> = { number ->
+        var tempNumber = number
+        val digits = mutableListOf<Int>()
+        while (tempNumber > 0) {
+            val digit = tempNumber % 10
+            digits.add(0, digit)
+            tempNumber /= 10
+        }
+        digits
     }
 }
 
 fun main() {
     println("Hello World!")
+    val game = App()
+    game.playNumberGame(4)
     // TODO: call the App.playNumberGame function with and without default arguments
 }

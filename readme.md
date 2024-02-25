@@ -9,7 +9,11 @@
 ## Questions
 ### Describe how Kotlin handles null safety. What are nullable types and non-null types in Kotlin? (0,5 points)
 
-<span style="color:blue">Provide your answer here! </span>
+<span style="color:blue">Kotlin handles null safety in different ways:
+- Safe Calls: the '?.' operator can be used to safely access properties or methods of nullable types. If the property is null the expression returns null rather than throwing an exception
+- Elvis Operator: the '?:' operator returns the left-hand operand if it's not null, otherwise it returns the right-hand.
+- Safe Casts: the 'as?' operator returns null if the casting would return a ClassCastException.
+- Not-null Assertion: the '!!' operator converts nullable types to non-nullable types. However if the operation is null it throws a NullPointer Exception, so its usage should be limited</span>
 > Note: you can also use code snippets to illustrate your answer. 
 
 ```kotlin 
@@ -19,7 +23,18 @@ val a: String = "value" // non-null type
 
 ### What are lambda expressions and higher order functions in Kotlin? Why would you store a function inside a variable? (0,5 points)
 
-<span style="color:blue">Provide your answer here!</span>
+<span style="color:blue">Lambda:
+- Lambda expressions in Kotlin are anonymous functions that appear as values.
+- They are defined by curly braces and '->' operand.
+- Lambda expressions can be assigned to variables, passed as arguments, or returned from other functions.
+- Lambda expressions enable functional-style programing
+Higher-Order Functions:
+- ...are functions that can tyke other functions as parameters and/or return functions
+- They allow code to be more modular and flexible by using abstraction of behavior
+- Higher-Order Functions enable the implementation of callbacks, event handling, and asynchronous programing
+Storing Functions inside vars:
+- Makes code more abstract and modular
+- Enables dynamic behavior</span>
 
 ### Provide a solution for the following number guessing game inside `App.kt`. (3 points)
 
